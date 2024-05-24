@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Script and Program Descriptions</title>
+<style>
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+table, th, td {
+  border: 1px solid black;
+}
+
+th, td {
+  padding: 10px;
+  text-align: left;
+}
+</style>
+</head>
+<body>
+
+<h2>Script and Program Descriptions</h2>
+
+<table>
+  <tr>
+    <th>Script/Program Name</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>move_feedback.bat</td>
+    <td>Moves feedback.txt from the download location to the current batch file location and performs data categorization, storing it in auto_CVE_issue, which will be copied to Virtual Box</td>
+  </tr>
+  <tr>
+    <td>ssh.bat</td>
+    <td>Executes remote copy to copy auto_CVE_issue to Virtual Box and triggers auto_run.sh</td>
+  </tr>
+  <tr>
+    <td>auto_run.sh</td>
+    <td>Executes run.sh and automatically fills in the password when prompted during SSH, ensuring successful execution of scans and avoiding errors due to permission issues</td>
+  </tr>
+  <tr>
+    <td>run.sh</td>
+    <td>Controls setup.sh, nmap_scan_CVE.sh, and nmap_scan_Port.sh based on feedback.txt content, then returns all results to the PC, to be used by Python scripts to fetch CVE-related data from the web and upload to Redmine</td>
+  </tr>
+  <tr>
+    <td>setup.sh</td>
+    <td>Checks for and installs required tools/packages if they do not exist</td>
+  </tr>
+  <tr>
+    <td>nmap_scan_CVE.sh</td>
+    <td>Scans for CVE vulnerabilities</td>
+  </tr>
+  <tr>
+    <td>nmap_scan_Port.sh</td>
+    <td>Scans for port vulnerabilities</td>
+  </tr>
+  <tr>
+    <td>move_CVE_txt.bat</td>
+    <td>Extracts CVE_numbers.txt from the scanned results in Share File, which contains the scanned CVE numbers, used for web data fetching</td>
+  </tr>
+  <tr>
+    <td>install_packages.py</td>
+    <td>Installs required Python packages</td>
+  </tr>
+  <tr>
+    <td>compress_files.py</td>
+    <td>Compresses the obtained result folder for easier upload to Redmine, reducing errors and individual file uploads</td>
+  </tr>
+  <tr>
+    <td>grep_CVE_content.py</td>
+    <td>Fetches data from the web based on CVE numbers and saves them in auto_CVE_issue as CVE-xxxx-xxxx.txt, to be included in Redmine descriptions</td>
+  </tr>
+  <tr>
+    <td>check_and_create_version.py</td>
+    <td>Checks Redmine for required issue versions, creates one if not found, in preparation for creating issues</td>
+  </tr>
+  <tr>
+    <td>click_to_create_issue.py</td>
+    <td>Creates a bug tracker based on feedback.txt, CVE.txt, and result.zip</td>
+  </tr>
+</table>
+
+<h2>SSH Commands</h2>
+<ul>
+  <li><code>sudo systemctl status ssh</code>: Check SSH service status</li>
+  <li><code>sudo systemctl enable ssh</code>: Enable SSH service to start automatically on system boot</li>
+  <li><code>sudo systemctl start ssh</code>: Start SSH service</li>
+  <li><code>sudo systemctl status ssh</code>: Check SSH service status again to ensure successful start</li>
+</ul>
+
+<h2>Execution Steps</h2>
+<ol>
+  <li>Open <code>index.html</code> to fill in data (run <code>python example_to_fill_in.py</code> if unsure how to fill)</li>
+  <li>Enter SSH Commands on Kali Linux terminal</li>
+  <li>Click <code>Start_Run.bat</code> twice</li>
+  <li>Enter scanning terminal user</li>
+  <li>Enter password required for <code>scp</code></li>
+  <li>Wait for automatic execution</li>
+</ol>
+
+<h2>Notes</h2>
+<p>Before testing, make sure to comment out the following two lines in <code>click_to_create_issue.py</code> to avoid accidentally creating an issue:</p>
+<pre>
+# create_button = driver.find_element(By.CSS_SELECTOR, "input[type='submit'][value='Create']")
+# create_button.click()
+</pre>
+
+<h2>Architecture diagram</h2>
+<img src="Architecture_diagram.png" alt="Architecture diagram">
+
+<h2>Flowchart</h2>
+<img src="nmap_scan_&_create_issues.png" alt="Nmap Scan & Create Issues">
+
+</body>
+</html>

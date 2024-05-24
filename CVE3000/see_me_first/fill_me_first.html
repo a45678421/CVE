@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fill out</title>
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="script.js" defer></script>
+</head>
+<body>
+  <div class="container">
+    <h1>Please fill out</h1>
+    <form id="feedbackForm" method="POST">
+      <label for="username">ASG_Redmine_USERNAME：</label>
+      <input type="text" id="username" name="username" placeholder="填入使用者名稱" class="validate-input" required><br>
+      
+      <label for="password">ASG_Redmine_PASSWORD：</label>
+      <input type="password" id="password" name="password" placeholder="填入密碼" class="validate-input" required><br>
+      <!-- Additional  -->
+      <label for="project">Project：</label>
+      <div class="project-container">
+        <select id="project" name="project" class="validate-input">
+          <option value="">請選擇</option>
+          <option value="SW">SW</option>
+          <option value="HW">HW</option>
+          <option value="IA">IA</option>
+          <option value="DTOS">DTOS</option>
+          <option value="WEC7">WEC7</option>
+          <option value="Linux">Linux</option>
+          <option value="Windows">Windows</option>
+          <option value="Watchdog">Watchdog</option>
+          <option value="EdgeLink">EdgeLink</option>
+        </select>
+        <span class="separator">::</span>
+        <input type="text" id="project_name" name="project_name" placeholder="TPC-100W" class="validate-input" required>
+        <span class="separator">::</span>
+        <input type="text" id="project_version" name="project_version" placeholder="Yocto4.0" class="validate-input">
+      </div>
+    <!-- Additional  -->
+      <label for="target_version">target_version：</label>
+      <select id="target_version" name="target_version" class="validate-input" onchange="checkOther(this.value)" required>
+        <option value="">請選擇</option>
+        <option value="TPC-100W-2g-v1.6-factory_reset">TPC-100W-2g-v1.6-factory_reset</option>
+        <option value="TPC-100W-4g-v2.5">TPC-100W-4g-v2.5</option>
+        <option value="TPC-100W-4g-v2.0">TPC-100W-4g-v2.0</option>
+        <option value="TPC-100W-4g-v2.6">TPC-100W-4g-v2.6</option>
+        <option value="TPC-100W-Yocto3.3-rc1">TPC-100W-Yocto3.3-rc1</option>
+        <option value="TPC-100W-Yocto3.3-rc2">TPC-100W-Yocto3.3-rc2</option>
+        <option value="TPC-100W-Yocto3.3.3-Rieter-r1">TPC-100W-Yocto3.3.3-Rieter-r1</option>
+        <option value="TPC-100W-Yocto3.3.3-Rieter-v1.3">TPC-100W-Yocto3.3.3-Rieter-v1.3</option>
+        <option value="其他">其他</option>
+      </select>
+      <input type="text" id="otherVersion" name="otherVersion" placeholder="填入版本" class="hidden" class="validate-input">
+
+      <label for="Assignee">Assignee：</label>
+      <select id="Assignee" name="Assignee" class="validate-input" required>
+          <option value="">請選擇</option>
+          <option value="Abby Liao 廖婉君">Abby Liao 廖婉君</option>
+          <option value="Annie Chou 周亭妏">Annie Chou 周亭妏</option>
+          <option value="Annie224 Lin 林欣穎">Annie224 Lin 林欣穎</option>
+          <option value="Campion Kang">Campion Kang</option>
+          <option value="Chic Lee 李奇融">Chic Lee 李奇融</option>
+          <option value="Eric Shen 沈榮風">Eric Shen 沈榮風</option>
+          <option value="Gino Chiu 邱良漢">Gino Chiu 邱良漢</option>
+          <option value="Harvey Tsai 蔡政翰">Harvey Tsai 蔡政翰</option>
+          <option value="John99 Chang 張浚瑋">John99 Chang 張浚瑋</option>
+          <option value="Julia Chou 周鈴雅">Julia Chou 周鈴雅</option>
+          <option value="Kaier Hsueh 薛鎧">Kaier Hsueh 薛鎧</option>
+          <option value="Keri Wei 魏千雅">Keri Wei 魏千雅</option>
+          <option value="Leon Yang 楊力綱">Leon Yang 楊力綱</option>
+          <option value="Mingren Hsu 許銘仁">Mingren Hsu 許銘仁</option>
+          <option value="Payton Ko 柯沛岑">Payton Ko 柯沛岑</option>
+          <option value="Rossi Chan 詹智強">Rossi Chan 詹智強</option>
+          <option value="Ryan Lin 林宗憲">Ryan Lin 林宗憲</option>
+          <option value="Selina Kuo 郭昭愉">Selina Kuo 郭昭愉</option>
+          <option value="Shinping Chen 陳興平">Shinping Chen 陳興平</option>
+          <option value="Sky Ho 何國琳">Sky Ho 何國琳</option>
+          <option value="Sunny Huang 黃佩珊">Sunny Huang 黃佩珊</option>
+          <option value="YuCheng Lee 李育澄">YuCheng Lee 李育澄</option>
+          <option value="Yuchun Chen 陳禹均">Yuchun Chen 陳禹均</option>
+      </select>
+
+      <label>Severity:</label>
+      <div class="severity-options">
+        <input type="radio" id="high" name="SEVERITY_VALUE" value="High" required>
+        <label for="high">high</label>  
+
+        <input type="radio" id="medium" name="SEVERITY_VALUE" value="Medium" required>
+        <label for="medium">medium</label> 
+        
+        <input type="radio" id="low" name="SEVERITY_VALUE" value="Low" required>
+        <label for="low">low</label>
+      </div>
+      
+      <div id="submit-button-container">
+        <input type="button" id="submit_button_id" name="submit_button" value="save" onclick="saveFormData()">
+      </div>
+    </form>
+    <!-- Additional notes -->
+    <div class="notes">
+      <p>Note that there are no spaces in the file location.</p>
+      <p>The prerequisites for this script are the following tools and environment:</p>
+      <ul>
+        <li>Python environment: Ensure that Python is installed on the system and that Python scripts can be executed using the command line with `python`.</li>
+        <li>Browser: It's used to open HTML files for filling out. Please make sure that browser is installed and can be launched from the command line or desktop icon.</li>
+        <li>Node.js: Ensure that Node.js is installed on the system. This is required for executing JavaScript code outside of a browser environment.</li>
+        <li>Redis: Ensure that Redis is installed and running on the system. Redis is used for caching and data storage.</li>
+      </ul>
+      <p>Need to ensure that these prerequisites are met; otherwise, certain steps in the script may encounter issues.If the Python environment is not set up, Python-related commands cannot be executed, etc.</p>
+      <p>Before proceeding, make sure to navigate to the "Requires_installation_tools" folder and install the necessary tools. If they are not installed, the script will guide you through the installation process.</p>
+    </div>
+  </div>
+</body>
+</html>

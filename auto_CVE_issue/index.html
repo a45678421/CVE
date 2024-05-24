@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"> <!--確保網頁能夠在不同裝置上正確地呈現-->
+<title>填寫基本資訊</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="container">
+  <h1>填寫基本資訊</h1>
+  <form id="feedbackForm" method="POST">
+    <label for="username">ASG_Redmine_USERNAME：</label>
+    <input type="text" id="username" name="username" placeholder="填入使用者名稱" class="validate-input" required><br>
+    
+    <label for="password">ASG_Redmine_PASSWORD：</label>
+    <input type="password" id="password" name="password" placeholder="填入密碼" class="validate-input" style="width: 100%;" required><br>
+
+    <label for="targetIpAddress">目標端 IP Address：</label>
+    <input type="text" id="targetIpAddress" name="targetIpAddress" placeholder="填入目標端IP(TPC-100W)"><br>
+
+    <label for="ipAddress">掃描端 IP Address：</label>
+    <input type="text" id="scanIpAddress" name="scanIpAddress" placeholder="填入掃描端IP(Kali_Linux)"><br>
+
+    <label for="scanusername">掃描端_USERNAME：</label>
+    <input type="text" id="scanusername" name="scanusername" placeholder="填入掃描端USERNAME"class="validate-input" required><br>
+
+    <label for="scanpassword">掃描端_PASSWORD：</label>
+    <input type="password" id="scanpassword" name="scanpassword" placeholder="填入掃描端PASSWORD" class="validate-input" required><br>
+
+    <label for="shareLocation">Share File Location：</label>
+    <input type="text" id="shareLocation" name="shareLocation" placeholder="填入分享檔案的位置" class="validate-input" required><br>
+
+    <label for="target_version">target_version：</label>
+    <select id="target_version" name="target_version" class="validate-input" onchange="checkOther(this.value)" required>
+      <option value="">請選擇</option>
+      <option value="TPC-100W-2g-v1.6-factory_reset">TPC-100W-2g-v1.6-factory_reset</option>
+      <option value="TPC-100W-4g-v2.5">TPC-100W-4g-v2.5</option>
+      <option value="TPC-100W-4g-v2.0">TPC-100W-4g-v2.0</option>
+      <option value="TPC-100W-4g-v2.6">TPC-100W-4g-v2.6</option>
+      <option value="TPC-100W-Yocto3.3-rc1">TPC-100W-Yocto3.3-rc1</option>
+      <option value="TPC-100W-Yocto3.3-rc2">TPC-100W-Yocto3.3-rc2</option>
+      <option value="TPC-100W-Yocto3.3.3-Rieter-r1">TPC-100W-Yocto3.3.3-Rieter-r1</option>
+      <option value="TPC-100W-Yocto3.3.3-Rieter-v1.3">TPC-100W-Yocto3.3.3-Rieter-v1.3</option>
+      <option value="其他">其他</option>
+    </select>
+    <input type="text" id="otherVersion" name="otherVersion" placeholder="填入版本" style="display: none;" required><br>
+
+    <label for="setup">設定安裝允許：</label>
+    <div class="setup-options">
+      <input type="radio" id="setupYes" name="setup" value="yes" required>
+      <label for="setupYes">同意</label>
+
+      <input type="radio" id="setupNo" name="setup" value="no" required>
+      <label for="setupNo">拒絕</label>
+    </div>
+
+    <label for="scanMode" id="scanModeLabel">掃描模式：</label>
+    <select id="scanMode" name="scanMode" required style="display: none;">
+      <option value="">請選擇掃描模式：</option>
+      <option value="1">nmap scan port</option>
+      <option value="2">nmap scan CVE</option>
+      <option value="3">nmap scan port & CVE</option>
+    </select>
+    
+    <label for="opinion">您的意見：</label><br>
+
+    <textarea id="opinion" name="opinion" rows="5" cols="40"></textarea><br>
+    <label for="category">意見類別：</label>
+    <select id="category" name="category">
+      <option value="">請選擇</option>
+      <option value="建議">建議</option>
+      <option value="問題">問題</option>
+      <option value="其他">其他</option>
+    </select><br>
+
+    <label for="satisfaction">滿意度：</label>
+    <div class="satisfaction-options">
+      <input type="radio" id="satisfied" name="satisfaction" value="滿意">
+      <label for="satisfied">滿意</label>
+
+      <input type="radio" id="neutral" name="satisfaction" value="普通">
+      <label for="neutral">普通</label>
+
+      <input type="radio" id="dissatisfied" name="satisfaction" value="不滿意">
+      <label for="dissatisfied">不滿意</label>
+    </div>
+
+    <input type="submit" id="submit_button_id" name="submit_button" value="儲存" onclick="saveFormData()">
+    <!--<input type="submit" id="submit_button_id" name="submit_button" value="儲存" onclick="saveFormData()">-->
+  </form>
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>

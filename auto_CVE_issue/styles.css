@@ -1,0 +1,68 @@
+/* 設定頁面的字型和外觀 */
+body {
+    font-family: Arial, sans-serif; /* 使用 Arial 字型，如果無法使用則使用 sans-serif 字型 */
+    margin: 20px; /* 設定頁面的外距 */
+}
+
+/* 設定容器的樣式 */
+.container {
+    max-width: 600px; /* 設定容器的最大寬度 */
+    margin: auto; /* 將容器的左右外距設定為自動 */
+    padding: 20px; /* 設定容器的內距 */
+    border: 1px solid #ccc; /* 設定容器的邊框 */
+    border-radius: 5px; /* 設定容器的圓角半徑 */
+    background-color: #f9f9f9; /* 設定容器的背景顏色 */
+}
+
+/* 設定標籤的樣式 */
+label {
+    font-weight: bold; /* 設定標籤的字型粗細 */
+    display: block; /* 將標籤顯示為區塊元素 */
+    margin-bottom: 5px; /* 設定標籤的底部外距 */
+}
+
+/* 設定文字框、密碼框、文本區域和選擇框的樣式 */
+input[type="text"],
+input[type="password"],
+textarea,
+select {
+    width: 100%; /* 設定元素的寬度為 100% */
+    padding: 8px; /* 設定元素的內距 */
+    margin-bottom: 10px; /* 設定元素的底部外距 */
+    border: 1px solid #ccc; /* 設定元素的邊框 */
+    border-radius: 3px; /* 設定元素的圓角半徑 */
+    box-sizing: border-box; /* 設定元素的尺寸包含邊框和內距 */
+}
+
+/* 設定滿意度選項的樣式 */
+.satisfaction-options label {
+    display: inline-block; /* 將標籤顯示為行內元素 */
+    margin-right: 20px; /* 設定標籤的右邊外距 */
+}
+
+/* 設定安裝選項的樣式 */
+.setup-options label {
+    display: inline-block; /* 將標籤顯示為行內元素 */
+    margin-right: 20px; /* 設定標籤的右邊外距 */
+}
+
+/* 設定提交按鈕的樣式 */
+input[type="submit"] {
+    background-color: #4CAF50; /* 設定按鈕的背景顏色 */
+    color: white; /* 設定按鈕的文字顏色 */
+    padding: 10px 15px; /* 設定按鈕的上下內距和左右內距 */
+    border: none; /* 移除按鈕的邊框 */
+    border-radius: 3px; /* 設定按鈕的圓角半徑 */
+    cursor: pointer; /* 設定按鈕的游標為手型 */
+}
+
+/* 設定提交按鈕的悬停效果 */
+input[type="submit"]:hover {
+    /*background-color: #45a049; */ /* 設定按鈕的背景顏色為淺綠色 */
+    background-color: #55acee;  /* 設定按鈕的背景顏色為淺藍色 */
+}
+
+/* 設定掃描模式的樣式，並初始隱藏 */
+#scanModeLabel {
+    display: none; /* 初始時隱藏掃描模式的 label */
+}

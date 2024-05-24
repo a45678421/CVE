@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>腳本和程式描述</title>
+<style>
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+table, th, td {
+  border: 1px solid black;
+}
+
+th, td {
+  padding: 10px;
+  text-align: left;
+}
+</style>
+</head>
+<body>
+
+<h2>腳本和程式描述</h2>
+
+<table>
+  <tr>
+    <th>腳本/程式名稱</th>
+    <th>描述</th>
+  </tr>
+  <tr>
+    <td>move_feedback.bat</td>
+    <td>將 feedback.txt 從下載位置移動到當前批次檔位置並進行資料分類，儲存於 auto_CVE_issue 中，這將被複製到虛擬機器</td>
+  </tr>
+  <tr>
+    <td>ssh.bat</td>
+    <td>執行遠端拷貝將 auto_CVE_issue 複製到虛擬機器並啟動 auto_run.sh</td>
+  </tr>
+  <tr>
+    <td>auto_run.sh</td>
+    <td>執行 run.sh 並在 SSH 提示時自動填入密碼，確保掃描成功並避免權限錯誤</td>
+  </tr>
+  <tr>
+    <td>run.sh</td>
+    <td>根據 feedback.txt 內容控制 setup.sh、nmap_scan_CVE.sh 和 nmap_scan_Port.sh，然後將所有結果返回到 PC，供 Python 腳本使用</td>
+  </tr>
+  <tr>
+    <td>setup.sh</td>
+    <td>檢查並安裝所需工具/套件</td>
+  </tr>
+  <tr>
+    <td>nmap_scan_CVE.sh</td>
+    <td>掃描 CVE 漏洞</td>
+  </tr>
+  <tr>
+    <td>nmap_scan_Port.sh</td>
+    <td>掃描端口漏洞</td>
+  </tr>
+  <tr>
+    <td>move_CVE_txt.bat</td>
+    <td>從 Share File 中的掃描結果中提取 CVE_numbers.txt，其中包含掃描到的 CVE 編號，用於網路資料抓取</td>
+  </tr>
+  <tr>
+    <td>install_packages.py</td>
+    <td>安裝所需的 Python 套件</td>
+  </tr>
+  <tr>
+    <td>compress_files.py</td>
+    <td>壓縮獲得的結果資料夾以便上傳到 Redmine，以減少錯誤和單個文件上傳</td>
+  </tr>
+  <tr>
+    <td>grep_CVE_content.py</td>
+    <td>根據 CVE 編號從網路上抓取資料並保存在 auto_CVE_issue 中，以 CVE-xxxx-xxxx.txt 的形式，供 Redmine 描述使用</td>
+  </tr>
+  <tr>
+    <td>check_and_create_version.py</td>
+    <td>檢查 Redmine 上是否存在所需版本，如不存在，則創建一個以準備創建問題</td>
+  </tr>
+  <tr>
+    <td>click_to_create_issue.py</td>
+    <td>基於 feedback.txt、CVE.txt 和 result.zip 創建 bug 追蹤器</td>
+  </tr>
+</table>
+
+<h2>SSH 指令</h2>
+<ul>
+  <li><code>sudo systemctl status ssh</code>: 檢查 SSH 服務狀態</li>
+  <li><code>sudo systemctl enable ssh</code>: 啟用 SSH 服務以便在系統啟動時自動啟動</li>
+  <li><code>sudo systemctl start ssh</code>: 啟動 SSH 服務</li>
+  <li><code>sudo systemctl status ssh</code>: 再次檢查 SSH 服務狀態以確保成功啟動</li>
+</ul>
+
+<h2>執行步驟</h2>
+<ol>
+  <li>開啟 <code>index.html</code> 填入資料（如果不確定如何填寫，執行 <code>python example_to_fill_in.py</code>）</li>
+  <li>在 Kali Linux 終端中輸入 SSH 指令</li>
+  <li>兩次點擊 <code>Start_Run.bat</code></li>
+  <li>輸入掃描終端用戶</li>
+  <li>輸入 <code>scp</code> 所需的密碼</li>
+  <li>等待自動執行</li>
+</ol>
+
+<h2>備註</h2>
+<p>在測試之前，請確保將 <code>click_to_create_issue.py</code> 中的以下兩行註釋掉，以避免意外創建問題：</p>
+<pre>
+# create_button = driver.find_element(By.CSS_SELECTOR, "input[type='submit'][value='Create']")
+# create_button.click()
+</pre>
+
+<h2>架構圖</h2>
+<img src="Architecture_diagram.png" alt="Architecture diagram">
+
+<h2>流程圖</h2>
+<img src="nmap_scan_&_create_issues.png" alt="Nmap Scan & Create Issues">
+
+</body>
+</html>

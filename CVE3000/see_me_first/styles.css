@@ -1,0 +1,110 @@
+/* 設定頁面的字型和外觀 */
+body {
+    font-family: Arial, sans-serif; /* 使用 Arial 字型，如果無法使用則使用 sans-serif 字型 */
+    margin: 20px; /* 設定頁面的外距 */
+}
+
+/* 設定容器的樣式 */
+.container {
+    max-width: 600px; /* 設定容器的最大寬度 */
+    margin: auto; /* 將容器的左右外距設定為自動 */
+    padding: 20px; /* 設定容器的內距 */
+    border: 1px solid #ccc; /* 設定容器的邊框 */
+    border-radius: 5px; /* 設定容器的圓角半徑 */
+    background-color: #f9f9f9; /* 設定容器的背景顏色 */
+}
+
+/* 設定標籤的樣式 */
+label {
+    font-weight: bold; /* 設定標籤的字型粗細 */
+    display: block; /* 將標籤顯示為區塊元素 */
+    margin-bottom: 5px; /* 設定標籤的底部外距 */
+}
+
+/* 設定文字框、密碼框、文本區域和選擇框的樣式 */
+input[type="text"],
+input[type="password"],
+textarea,
+select {
+    width: 100%; /* 設定元素的寬度為 100% */
+    padding: 8px; /* 設定元素的內距 */
+    margin-bottom: 10px; /* 設定元素的底部外距 */
+    border: 1px solid #ccc; /* 設定元素的邊框 */
+    border-radius: 3px; /* 設定元素的圓角半徑 */
+    box-sizing: border-box; /* 設定元素的尺寸包含邊框和內距 */
+}
+
+/* 自定義 Severity 選項的樣式 */
+.severity-options label {
+    display: inline-block;
+    margin-right: 20px;
+    font-size: 16px; /* 設置字體大小為 16 像素 */
+    color: #333; /* 設置文字顏色為深灰色 */
+    text-transform: capitalize; /* 將文字轉換為首字母大寫 */
+}
+
+
+/* 設定 Severity 選項的樣式 */
+.severity-options label {
+    display: inline-block; /* 將標籤顯示為行內元素 */
+}
+
+/* 設定提交按鈕的樣式 */
+input[type="button"] {
+    background-color: #4CAF50; /* 設定按鈕的背景顏色 */
+    color: white; /* 設定按鈕的文字顏色 */
+    padding: 10px 15px; /* 設定按鈕的上下內距和左右內距 */
+    border: none; /* 移除按鈕的邊框 */
+    border-radius: 3px; /* 設定按鈕的圓角半徑 */
+    cursor: pointer; /* 設定按鈕的游標為手型 */
+}
+
+/* 設定提交按鈕的悬停效果 */
+input[type="button"]:hover {
+    /*background-color: #45a049; */ /* 設定按鈕的背景顏色為淺綠色 */
+    background-color: #55acee;  /* 設定按鈕的背景顏色為淺藍色 */
+}
+
+.hidden {
+    display: none; /* 隐藏元素 */
+}
+  
+#submit-button-container {
+    text-align: center; /* 使提交按钮居中 */
+    margin-top: 10px; /* 提交按钮与上方元素之间的间距 */
+}
+  
+/* 附加说明的样式 */
+.notes {
+    margin-top: 20px; /* 附加说明与上方元素之间的间距 */
+    font-family: Arial, sans-serif; /* 设置字体 */
+    font-size: 14px; /* 设置字体大小 */
+    color: #666; /* 设置字体颜色 */
+}
+
+.project-container {
+    display: flex; /* 使用 flex 布局，将项目容器中的元素排列在同一行 */
+}
+  
+.project-container select {
+    width: 80px; /* 调整选择框的宽度 */
+}
+  
+.project-container input {
+    flex: 1; /* 输入框占据剩余的空间 */
+}
+
+.project-container .separator {
+    margin: auto; /* 将容器的左右外距设置为自动，居中对齐 */
+    font-size: 20px; /* 调整字体大小 */
+    font-weight: bold; /* 使其加粗 */
+    color: #000; /* 设置字体颜色 */
+    display: flex; /* 使用 flex 布局 */
+    margin-bottom: 13px; /* 设置下方的外边距 */
+    line-height: 1.5; /* 调整行高，使上下分开 */
+}
+
+
+  
+
+  
