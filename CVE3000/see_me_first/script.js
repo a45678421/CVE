@@ -154,11 +154,13 @@ function feedback() {
     const project = formData.get('project');
     const projectName = formData.get('project_name');
     const projectVersion = formData.get('project_version');
+    const apiKey = formData.get('redmine_api_key'); // 獲取 API Key 的值
     
     // 將表單數據轉換為文字格式，只保留指定的欄位
     let textData = '';
     textData += `USERNAME = "${formData.get('username')}"\n`;
     textData += `PASSWORD = "${formData.get('password')}"\n`;
+    textData += `API_KEY = "${apiKey}"\n`;
     let projectString = projectName;
 
     if (project) {
@@ -178,7 +180,7 @@ function feedback() {
     }
     textData += `ASSIGNEE_NAME = "${assignee}"\n`; 
     textData += `SEVERITY_VALUE = "${severity}"\n`; 
-    
+
     // 創建 feedback.txt 檔案
     const feedbackBlob = new Blob([textData], { type: 'text/plain' });
 
@@ -194,6 +196,7 @@ function feedback() {
     // 清空所有欄位的值
     document.getElementById('username').value = '';
     document.getElementById('password').value = '';
+    document.getElementById('redmine_api_key').value = ''; 
     document.getElementById('project').value = '';
     document.getElementById('project_name').value = '';
     document.getElementById('project_version').value = '';

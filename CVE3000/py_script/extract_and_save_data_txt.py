@@ -30,7 +30,8 @@ with open("feedback.txt", "rb") as file:
       result = chardet.detect(raw_data)
       encoding = result['encoding']
 
-print(f"偵測到的編碼：{encoding}")
+#print(f"偵測到的編碼：{encoding}")
+logging.info('Detected encoding: : %s', encoding)
 
 with open("feedback.txt", "r", encoding=encoding) as file:
       lines = file.readlines()
@@ -85,7 +86,7 @@ if os.path.exists(file_path):
           CVE_link = row['Column1.issue.link'] # (CVE Link) 用於描述CVE的連結，來源自NVD(National Vulnerability Database)。
           CVSS_v2 = row['Column1.issue.scorev2'] # (CVSS v2) 用於描述CVE的CVSS version 2 方式評分的分數。
           CVSS_v3 = row['Column1.issue.scorev3'] # (CVSS v3) 用於描述CVE透過CVSS version 3 方式評分的分數。
-           
+          REDMINE_STATUS = row['Column1.redmine.status'] # (Redmine Status) 用於描述Redmine create issue狀態。
           # 輸出提取的值
       #     print(f'Redmine_subject: {CVE_ID}')    
       #     print("Redmine_VERSION:", Redmine_VERSION) 
@@ -119,6 +120,7 @@ if os.path.exists(file_path):
           logging.info('CVE Link: %s', CVE_link)
           logging.info('CVSS v2: %s', CVSS_v2)
           logging.info('CVSS v3: %s', CVSS_v3)
+          logging.info('REDMINE_STATUS: %s', REDMINE_STATUS)
           logging.info('-------------------')
 
           # 將輸出內容寫入文件
@@ -138,6 +140,6 @@ if os.path.exists(file_path):
               output_file.write(f"CVE Link: {CVE_link}\n")
               output_file.write(f"CVSS v2: {CVSS_v2}\n")
               output_file.write(f"CVSS v3: {CVSS_v3}\n")
-             
+              output_file.write(f"REDMINE_STATUS: {REDMINE_STATUS}\n")
 else:
       print(f"檔案 {file_path} 不存在。")

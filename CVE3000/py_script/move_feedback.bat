@@ -4,7 +4,7 @@ setlocal
 set "sourceFolder=%USERPROFILE%\Downloads"
 set "destinationFolder=%~dp0"
 
-rem ²¾°Ê feedback.txt
+rem move feedback.txt
 set "sourceFile=%sourceFolder%\feedback.txt"
 if not exist "%sourceFile%" (
     echo File not found: "%sourceFile%"

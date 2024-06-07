@@ -90,7 +90,7 @@ else:
 columns = [
     'CVE_ID', 'COMPONENT', 'CATEGORY', 'VERSION', 'Description',
     'ATTACK_VECTOR', 'STATUS', 'Threat_level', 'CVSS_v2', 'CVSS_v3', 'CVE_link', 
-    'Redmine_Subject', 'Redmine_VERSION', 'ASSIGNEE_NAME', 'SEVERITY_VALUE', 'zip_link_content'
+    'Redmine_Subject', 'Redmine_VERSION', 'ASSIGNEE_NAME', 'SEVERITY_VALUE', 'zip_link_content', 'REDMINE_STATUS'
 ]
 all_data = pd.DataFrame(columns=columns)
 
@@ -122,7 +122,8 @@ for file_name in file_names:
                 'Redmine_VERSION': Redmine_VERSION,
                 'ASSIGNEE_NAME': ASSIGNEE_NAME,
                 'SEVERITY_VALUE': SEVERITY_VALUE,
-                'zip_link_content': zip_link_content
+                'zip_link_content': zip_link_content,
+                'REDMINE_STATUS' : row['Column1.redmine.status']
             }
             all_data = pd.concat([all_data, pd.DataFrame([data])], ignore_index=True)
             
@@ -136,7 +137,7 @@ for file_name in file_names:
             CVE_link = row['Column1.issue.link'] # (CVE Link) 用於描述CVE的連結，來源自NVD(National Vulnerability Database)。
             CVSS_v2 = row['Column1.issue.scorev2'] # (CVSS v2) 用於描述CVE的CVSS version 2 方式評分的分數。
             CVSS_v3 = row['Column1.issue.scorev3'] # (CVSS v3) 用於描述CVE透過CVSS version 3 方式評分的分數。
-
+            REDMINE_STATUS = row['Column1.redmine.status']
             # print(f'COMPONENT: {COMPONENT}')
             # print(f'CATEGORY: {CATEGORY}')
             # print(f'VERSION: {VERSION}')
@@ -169,6 +170,7 @@ for file_name in file_names:
             logging.info('ASSIGNEE_NAME: %s', ASSIGNEE_NAME)
             logging.info('SEVERITY_VALUE: %s', SEVERITY_VALUE)
             logging.info('folder_path: %s', folder_path)
+            logging.info('REDMINE_STATUS: %s', REDMINE_STATUS)
             logging.info('-------------------')
 
 # 將總數據保存到新的 Excel 檔中

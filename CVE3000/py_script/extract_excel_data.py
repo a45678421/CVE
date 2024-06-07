@@ -32,19 +32,28 @@ for folder_name in folders_to_create:
         logging.info(f'Created folder: {folder_name}')
 
 # 查找上一層目錄中的 .xlsx 文件
-xlsx_files = glob.glob('../*.xlsx')
+xlsx_files = glob.glob('../Put_the_excel_file_here/*.xlsx')
 
-# 如果找到匹配的文件，讀取第一個 .xlsx 文件的前3000行資料
+# 如果找到匹配的文件，讀取第一個 .xlsx 文件的前num_rows行資料
+num_rows = 15000
 if xlsx_files:
-    xlsx_file_path = xlsx_files[0]
-    df = pd.read_excel(xlsx_file_path, nrows=50)
-    logging.info(f'Read first 3000 rows from {xlsx_file_path}')
+    for xlsx_file_path in xlsx_files:
+        df = pd.read_excel(xlsx_file_path, nrows=num_rows)
+        logging.info(f'Read first {num_rows} rows from {xlsx_file_path}')
+        logging.info(f'Columns in the file: {df.columns.tolist()}')
 else:
     logging.error("No .xlsx files found in the parent directory")
     raise FileNotFoundError("No .xlsx files found in the parent directory")
 
 # 抓取指定列的數據
-selected_columns = ['Column1.name', 'Column1.layer', 'Column1.version', 'Column1.issue.id', 'Column1.issue.summary', 'Column1.issue.vector', 'Column1.issue.status', 'Column1.issue.scorev2', 'Column1.issue.scorev3', 'Column1.issue.link']
+selected_columns = ['Column1.name', 'Column1.layer', 'Column1.version', 'Column1.issue.id', 'Column1.issue.summary', 'Column1.issue.vector', 'Column1.issue.status', 'Column1.issue.scorev2', 'Column1.issue.scorev3', 'Column1.issue.link', 'Column1.redmine.status']
+
+# 檢查是否所有的選擇列都存在
+missing_columns = [col for col in selected_columns if col not in df.columns]
+if missing_columns:
+    logging.error(f'Missing columns: {missing_columns}')
+    raise ValueError(f'Missing columns: {missing_columns}')
+
 selected_data = df[selected_columns]
 
 # 創建空的DataFrame來保存summary.xlsx中的資料
@@ -57,16 +66,16 @@ for index, row in selected_data.iterrows():
     issue_id = row['Column1.issue.id']
     filename = f'{issue_id}.xlsx'
     
-    # 檢查scorev2和scorev3是否有一列大於7
-    if row['Column1.issue.scorev2'] > 7 or row['Column1.issue.scorev3'] > 7:
+    # 檢查scorev2和scorev3是否有一列大於等於7
+    if row['Column1.issue.scorev2'] >= 7 or row['Column1.issue.scorev3'] >= 7:
         # 保存當前行資料到High資料夾
         row_df = pd.DataFrame([row])  # 創建包含當前行資料的DataFrame
         row_df.to_excel(os.path.join('High', filename), index=False)
-        logging.info(f'Saved data to High/{filename}, scorev2 or scorev3 > 7')
+        logging.info(f'Saved data to High/{filename}, scorev2 or scorev3 >= 7')
         
         # 將當前行資料添加到summary_df中
         High_summary_df = pd.concat([High_summary_df, row_df], ignore_index=True)
-        logging.info(f'Appended data to High_summary.xlsx, scorev2 or scorev3 > 7')
+        logging.info(f'Appended data to High_summary.xlsx, scorev2 or scorev3 >= 7')
     elif 4 <= row['Column1.issue.scorev2'] <= 6.9 or 4 <= row['Column1.issue.scorev3'] <= 6.9:
         # 保存當前行資料到Medium資料夾
         row_df = pd.DataFrame([row])  # 創建包含當前行資料的DataFrame

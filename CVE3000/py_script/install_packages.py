@@ -72,6 +72,7 @@ packages_to_check = [
     ('comtypes', 'comtypes'),
     ('pywin32', 'pywin32'),
     ('chardet', 'chardet'),
+    ('Redmine', 'python-redmine'),
     ('flask', 'flask'),
     # Add pylint related dependency packages
     ('tomlkit', 'tomlkit'),

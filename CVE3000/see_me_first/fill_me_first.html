@@ -19,7 +19,13 @@
       
       <label for="password">ASG_Redmine_PASSWORD：</label>
       <input type="password" id="password" name="password" placeholder="填入密碼" class="validate-input" required><br>
-      <!-- Additional  -->
+      
+      <label for="redmine_api_key">Redmine API Key：<small class="api-key-note">
+        API Key 可以在 <a href="http://advrm.advantech.com:3006/my/account" target="_blank" rel="noopener" class="api-key-link">這裡</a> 的 "API access key" 獲取
+      </small><br></label>
+      <input type="text" id="redmine_api_key" name="redmine_api_key" placeholder="填入Redmine API Key" class="validate-input" required><br>
+      
+      
       <label for="project">Project：</label>
       <div class="project-container">
         <select id="project" name="project" class="validate-input">
@@ -39,7 +45,6 @@
         <span class="separator">::</span>
         <input type="text" id="project_version" name="project_version" placeholder="Yocto4.0" class="validate-input">
       </div>
-    <!-- Additional  -->
       <label for="target_version">target_version：</label>
       <select id="target_version" name="target_version" class="validate-input" onchange="checkOther(this.value)" required>
         <option value="">請選擇</option>

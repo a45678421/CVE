@@ -84,7 +84,7 @@ with zipfile.ZipFile(zip_file_name, 'w', zipfile.ZIP_DEFLATED) as zipf:
                      zipf.write(dir_path, arcname)
          else:
              logging.info(f'資料夾 {folder} 不存在。')
-             print(f"資料夾 {folder} 不存在。")
+             # print(f"資料夾 {folder} 不存在。")
 
 logging.info(f'資料夾已壓縮為 {zip_file_name}')
 # print(f"資料夾已壓縮為 {zip_file_name}")

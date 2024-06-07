@@ -8,7 +8,7 @@ echo Progress: 0% > ..\loading\progress.txt
 
 echo Step 8: Moving feedback.txt file...
 call move_feedback.bat 
-echo Progress: 5% 
+echo Progress: 10% 
 echo 10% > ..\loading\progress.txt
 
 echo Step 9: Installing necessary packages...
@@ -20,6 +20,11 @@ echo Step 10: Login and update feedback information...
 python -u login_and_update_feedback.py 
 echo Progress: 30%
 echo 30% > ..\loading\progress.txt
+
+echo Step 11: Convert from json to .xlsx
+python -u jason_to_excel.py
+echo Progress: 35%
+
 
 echo Step 11: Extracting data from Excel file...
 python -u extract_excel_data.py 

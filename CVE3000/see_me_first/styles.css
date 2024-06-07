@@ -104,7 +104,19 @@ input[type="button"]:hover {
     line-height: 1.5; /* 调整行高，使上下分开 */
 }
 
+/* 設定API Key說明的樣式 */
+.api-key-note {
+    font-family: Arial, sans-serif; /* 設定字體 */
+    font-size: 14px; /* 設定字體大小 */
+    color: #999; /* 設定字體顏色為淺色 */
+}
 
-  
+/* 設定API Key連結的樣式 */
+.api-key-link {
+    color: #007BFF; /* 設定連結顏色 */
+    text-decoration: none; /* 移除連結下劃線 */
+}
 
-  
+.api-key-link:hover {
+    text-decoration: underline; /* 懸停時添加下劃線 */
+}

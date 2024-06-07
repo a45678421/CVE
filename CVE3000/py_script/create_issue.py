@@ -171,8 +171,13 @@ try:
             # 讀取Excel文件
             df = pd.read_excel(file_path)
 
-            # 提取資料並列印
+            # 提取資料並創建 Redmine Issue
             for index, row in df.iterrows():
+                redmine_status = str(row['Column1.redmine.status']).strip().lower()
+                if redmine_status in ['false', 'no', 'n', '0', '']:
+                    logging.info('Skipping issue creation for %s due to redmine status: %s', row['Column1.issue.id'], redmine_status)
+                    continue
+                
                 subject = row['Column1.issue.id'] # (Subject) 用於描述Redmine標題 和CVE編號。
                 COMPONENT = row['Column1.name'] # (Component) 用於描述應用程式的組件或模組。
                 CATEGORY = row['Column1.layer'] # (Category) 用於描述應用程式的類別或分類。
