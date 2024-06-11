@@ -117,13 +117,13 @@ pause
 
 echo Step 4: Creating server.bat...
 REM Create server.bat
-echo if not exist see_me_first mkdir see_me_first > server.bat
 echo npm install express >> server.bat
-echo cd see_me_first >> server.bat
 
 
 echo Step 5: Running server.bat...
 call server.bat 
+REM Delete server.bat after execution
+del server.bat
 
 echo Step 6: Changing directory to see_me_first and starting Node.js server...
 cd see_me_first

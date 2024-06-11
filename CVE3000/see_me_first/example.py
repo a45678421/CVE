@@ -41,7 +41,7 @@ target_version.select_by_visible_text("TPC-100W-4g-v2.5")
 
 # 選擇受理人
 assignee = Select(driver.find_element(By.ID, "Assignee"))
-assignee.select_by_visible_text("Sky Ho 何國琳")
+assignee.select_by_visible_text("YuCheng Lee 李育澄")
 
 # 選擇嚴重程度
 severity = driver.find_element(By.ID, "high")

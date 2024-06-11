@@ -7,7 +7,7 @@ echo 0% > ..\loading\progress.txt
 echo Progress: 0% > ..\loading\progress.txt
 
 echo Step 8: Moving feedback.txt file...
-call move_feedback.bat 
+python -u move_feedback.py 
 echo Progress: 10% 
 echo 10% > ..\loading\progress.txt
 
@@ -25,43 +25,42 @@ echo Step 11: Convert from json to .xlsx
 python -u jason_to_excel.py
 echo Progress: 35%
 
-
-echo Step 11: Extracting data from Excel file...
+echo Step 12: Extracting data from Excel file...
 python -u extract_excel_data.py 
 echo Progress: 40%
 echo 40% > ..\loading\progress.txt
 
-echo Step 12: Extracting and saving data by txt...
+echo Step 13: Extracting and saving data by txt...
 python -u extract_and_save_data_txt.py 
 echo Progress: 50%
 echo 50% > ..\loading\progress.txt
 
-echo Step 13: Checking and creating versions...
+echo Step 14: Checking and creating versions...
 python -u check_and_create_version.py 
 echo Progress: 60%
 echo 60% > ..\loading\progress.txt
 
-echo Step 14: Compressing files...
+echo Step 15: Compressing files...
 python -u compress_files.py 
 echo Progress: 65%
 echo 65% > ..\loading\progress.txt
 
-echo Step 15: summary generate excel file...
+echo Step 16: summary generate excel file...
 python -u summary.py 
 echo Progress: 70%
 echo 70% > ..\loading\progress.txt
 
-echo Step 16: Uploading zip file and getting zip file link...
+echo Step 17: Uploading zip file and getting zip file link...
 python -u upload_and_get_link.py 
 echo Progress: 80%
 echo 80% > ..\loading\progress.txt
 
-echo Step 16: Creating issues...
-python -u create_issue.py 
+echo Step 18: Creating issues...
+python -u create_issue_api.py
 echo Progress: 90%
 echo 90% > ..\loading\progress.txt
 
-echo Step 17: Moving folders and ZIP file to the parent directory...
+echo Step 19: Moving folders and ZIP file to the parent directory...
 
 REM checks whether the moved_folders directory exists and deletes it if it exists.
 if exist ..\moved_folders (

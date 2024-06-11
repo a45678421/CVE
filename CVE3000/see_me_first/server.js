@@ -53,7 +53,7 @@ app.get('/styles.css', (req, res) => {
 });
 
 app.get('/run-bat', (req, res) => {
-    const batFilePath = path.join(__dirname, 'main.bat');
+    const batFilePath = path.join(__dirname, '../batch/main.bat');
     exec(batFilePath, { maxBuffer: 10 * 1024 * 1024 }, (error, stdout, stderr) => { // 增加 maxBuffer 大小到 10MB
         if (error) {
             console.error(`Error executing batch file: ${error}`);
