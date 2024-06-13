@@ -45,15 +45,15 @@ python -u compress_files.py
 echo Progress: 65%
 echo 65% > ..\loading\progress.txt
 
-echo Step 16: summary generate excel file...
-python -u summary.py 
-echo Progress: 70%
-echo 70% > ..\loading\progress.txt
-
-echo Step 17: Uploading zip file and getting zip file link...
+echo Step 16: Uploading zip file and getting zip file link...
 python -u upload_and_get_link.py 
 echo Progress: 80%
 echo 80% > ..\loading\progress.txt
+
+echo Step 17: summary generate excel file...
+python -u summary.py 
+echo Progress: 70%
+echo 70% > ..\loading\progress.txt
 
 echo Step 18: Creating issues...
 python -u create_issue_api.py

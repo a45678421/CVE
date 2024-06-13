@@ -1,0 +1,192 @@
+*, *:after, *:before {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.preloader-wrap{
+ position: fixed;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+}
+.preloader {
+  position: relative;
+  width: 300px; /* 調整寬度 */
+  height: 300px; /* 調整高度 */
+  border-radius: 50%;
+  perspective: 780px;
+}
+
+.loading-circle {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  border-radius: 50%;
+}
+
+.loading-circle-one {
+  left: 0%;
+  top: 0%;
+  animation: loadingCircleOne 1.2s linear infinite;
+  border-bottom: 12px solid #ff5252; /* 紅色 */
+}
+.loading-circle-two {
+  top: 0%;
+  right: 0%;
+  animation: loadingCircleTwo 1.2s linear infinite;
+  border-right: 12px solid #ffa726; /* 橙色 */
+}
+.loading-circle-three {
+  right: 0%;
+  bottom: 0%;
+  animation: loadingCircleThree 1.2s linear infinite;
+  border-top: 12px solid #ffeb3b; /* 黃色 */
+}
+.loading-circle-four {
+  bottom: 0%;
+  left: 0%;
+  animation: loadingCircleFour 1.2s linear infinite; /* 新增動畫 */
+  border-left: 12px solid #4caf50; /* 綠色 */
+}
+
+@keyframes loadingCircleOne {
+ 0% {
+     transform: rotateX(40deg) rotateY(-40deg) rotateZ(0deg);
+ }
+ 100% {
+     transform: rotateX(40deg) rotateY(-40deg) rotateZ(360deg);
+ }
+}
+@keyframes loadingCircleTwo {
+ 0% {
+     transform: rotateX(50deg) rotateY(15deg) rotateZ(0deg);
+ }
+ 100% {
+     transform: rotateX(50deg) rotateY(15deg) rotateZ(360deg);
+ }
+}
+@keyframes loadingCircleThree {
+ 0% {
+     transform: rotateX(15deg) rotateY(50deg) rotateZ(0deg);
+ }
+ 100% {
+     transform: rotateX(15deg) rotateY(50deg) rotateZ(360deg);
+ }
+}
+@keyframes loadingCircleFour {
+ 0% {
+     transform: rotateX(-15deg) rotateY(-50deg) rotateZ(0deg);
+ }
+ 100% {
+     transform: rotateX(-15deg) rotateY(-50deg) rotateZ(360deg);
+ }
+}
+
+/* Body styles */
+body {
+  height: 100vh;
+  margin: 0;
+  display: grid;
+  place-items: center;
+  background: #000000;
+  color: white;
+}
+
+/* Circle animation */
+.circle {
+  width: 180px;
+  height: 180px;
+  background: conic-gradient(from 0deg at 50% 50%, #6f7bf7 0%, #9bf8f4 50%, #101012 50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100px;
+  box-shadow: 4px 4px 16px rgba(0, 0, 0, 0.75),
+              -4px -4px 16px rgba(255, 255, 255, 0.1);
+  animation: spin 1s infinite linear;
+  position: relative;
+}
+
+@keyframes spin {
+  0% {
+      transform: rotate(0deg);
+  }
+  100% {
+      transform: rotate(360deg);
+  }
+}
+
+.count {
+  content: " ";
+  width: 174px;
+  height: 174px;
+  background: #1d1e22;
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100px;
+  box-shadow: 4px 4px 16px rgba(0, 0, 0, 0.75) inset,
+              -4px -4px 16px rgba(255, 255, 255, 0.1) inset;
+  animation: spin 1s infinite linear reverse;
+}
+
+.percent {
+  font-family: sans-serif;
+  font-size: 4em;
+}
+
+/* styles.css */
+body, html {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+   background: #000000;
+}
+
+canvas {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+a {
+  color: black;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+img.icon {
+  display: inline-block;
+  height: 1em;
+  margin: 0 0 -0.1em 0.3em;
+}
+
+/* 遊標跟隨的效果 */
+.cursor {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #fff;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translate(-50%, -50%);
+  pointer-events: none; /* 禁止遊標跟隨元素接收滑鼠事件 */
+  z-index: 1000; /* 確保遊標跟隨元素在最上層 */
+  mix-blend-mode: difference; /* 混合模式，使遊標跟隨元素的顏色根據背景色變化 */
+}
+
+
+

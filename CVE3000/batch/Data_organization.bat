@@ -51,6 +51,12 @@ if exist *.zip (
     echo ZIP file moved to moved_folders.
 )
 
+REM Move all .txt files to moved_folders
+for %%f in (*.txt) do (
+    move /Y "%%f" moved_folders
+    echo Moved %%f to moved_folders.
+)
+
 move /Y moved_folders ..
 
 cd ..

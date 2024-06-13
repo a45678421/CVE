@@ -88,7 +88,7 @@ where redis-server > nul 2>&1
 if %ERRORLEVEL% NEQ 0 (
     echo Redis not found, downloading...
     REM Download and install Redis using curl
-    wget https://github.com/tporadowski/redis/releases/download/v5.0.14.1/Redis-x64-5.0.14.1.msi
+    winget https://github.com/tporadowski/redis/releases/download/v5.0.14.1/Redis-x64-5.0.14.1.msi
     msiexec /i Redis-x64-5.0.14.1.msi 
     del Redis-x64-5.0.14.1.msi
     echo Please run this script again.
@@ -102,7 +102,7 @@ if %ERRORLEVEL% NEQ 0 (
     if %ERRORLEVEL% NEQ 0 (
         echo Incorrect Redis version, updating...
         REM Download and install Redis using curl
-        wget https://github.com/tporadowski/redis/releases/download/v5.0.14.1/Redis-x64-5.0.14.1.msi
+        winget https://github.com/tporadowski/redis/releases/download/v5.0.14.1/Redis-x64-5.0.14.1.msi
         msiexec /i Redis-x64-5.0.14.1.msi 
         del Redis-x64-5.0.14.1.msi
         echo Please run this script again.

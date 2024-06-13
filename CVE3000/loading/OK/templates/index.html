@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Batch Progress</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+    <div class="circle">
+        <p class="count">
+            <span class="percent">50</span>%
+        </p>
+    </div>
+    <div class="preloader-wrap">
+        <div class="preloader">
+            <div class="loading-circle loading-circle-one"></div>
+            <div class="loading-circle loading-circle-two"></div>
+            <div class="loading-circle loading-circle-three"></div>
+            <div class="loading-circle loading-circle-four"></div> 
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

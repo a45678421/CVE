@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deployment Log</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="steps" id="steps-container">
+            <div class="step" id="step-vm">VM</div>
+            <div class="step" id="step-engine">Engine</div>
+            <div class="step" id="step-prepare-vm">Prepare VM</div>
+            <div class="step" id="step-storage">Storage</div>
+            <div class="step" id="step-finish">Finish</div>
+        </div>
+        <div class="progress-bar">
+            <div class="progress" id="progress-bar"></div>
+        </div>
+        <div class="log-container">
+            <div class="log-header">Deployment in progress</div>
+            <div class="log-content" id="log-content">
+                <!-- Log content will be loaded here -->
+            </div>
+        </div>
+        <div class="file-input-container">
+            <label for="log-file-input" class="file-label">Choose Log File</label>
+            <input type="file" id="log-file-input" accept=".txt" class="file-input">
+            <label for="progress-file-input" class="file-label">Choose Progress File</label>
+            <input type="file" id="progress-file-input" accept=".txt" class="file-input">
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

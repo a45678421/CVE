@@ -1,6 +1,7 @@
 import os
 import shutil
 
+#負責將 feedback.txt 從下載資料夾移至腳本所在目錄。
 def main():
     source_folder = os.path.join(os.path.expanduser('~'), 'Downloads')
     destination_folder = os.path.dirname(os.path.abspath(__file__))
