@@ -1,8 +1,0 @@
-[I 20240612 17:42:07 check_and_create_version:83] Checking and creating version directories...
-[I 20240612 17:42:07 check_and_create_version:87] Detected encoding: utf-8
-[I 20240612 17:42:07 check_and_create_version:96] USERNAME: Sky.Ho
-[I 20240612 17:42:07 check_and_create_version:97] PASSWORD: @Dvan0912H
-[I 20240612 17:42:07 check_and_create_version:98] PROJECT: test-cve
-[I 20240612 17:42:07 check_and_create_version:99] VERSION: TPC-100W-4g-v3.3
-[I 20240612 17:42:13 check_and_create_version:51] Current URL: http://advrm.advantech.com:3006/projects/testcve/settings/versions
-[I 20240612 17:42:16 check_and_create_version:76] New version TPC-100W-4g-v3.3 created successfully.
