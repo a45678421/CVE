@@ -47,7 +47,7 @@ select {
 }
 
 /* 設定提交按鈕的樣式 */
-input[type="submit"] {
+button[type="button"] {
     background-color: #4CAF50; /* 設定按鈕的背景顏色 */
     color: white; /* 設定按鈕的文字顏色 */
     padding: 10px 15px; /* 設定按鈕的上下內距和左右內距 */
@@ -57,7 +57,7 @@ input[type="submit"] {
 }
 
 /* 設定提交按鈕的悬停效果 */
-input[type="submit"]:hover {
+button[type="button"]:hover {
     /*background-color: #45a049; */ /* 設定按鈕的背景顏色為淺綠色 */
     background-color: #55acee;  /* 設定按鈕的背景顏色為淺藍色 */
 }
