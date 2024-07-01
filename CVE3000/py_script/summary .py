@@ -41,7 +41,7 @@ def process_excel_files(file_names, folder_path, redmine_version, assignee_name,
                     'ASSIGNEE_NAME': assignee_name,
                     'SEVERITY_VALUE': severity_value,
                     'zip_link_content': zip_link_content,
-                    'REDMINE_STATUS': row['Column1.redmine.status']
+                    'REDMINE_STATUS': row['Column1.redmine.upload']
                 }
                 all_data = pd.concat([all_data, pd.DataFrame([data])], ignore_index=True)
                 
@@ -60,7 +60,7 @@ def process_excel_files(file_names, folder_path, redmine_version, assignee_name,
                 logging.info('ASSIGNEE_NAME: %s', assignee_name)
                 logging.info('SEVERITY_VALUE: %s', severity_value)
                 logging.info('folder_path: %s', folder_path)
-                logging.info('REDMINE_STATUS: %s', row['Column1.redmine.status'])
+                logging.info('REDMINE_STATUS: %s', row['Column1.redmine.upload'])
                 logging.info('-------------------')
 
     return all_data

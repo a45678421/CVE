@@ -74,6 +74,7 @@ packages_to_check = [
     ('chardet', 'chardet'),
     ('Redmine', 'python-redmine'),
     ('flask', 'flask'),
+    ('tqdm', 'tqdm'),
     # Add pylint related dependency packages
     ('tomlkit', 'tomlkit'),
     ('platformdirs', 'platformdirs'),

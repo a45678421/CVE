@@ -30,8 +30,11 @@ def main():
     # 設定 summary 資料夾路徑
     summary_folder_path = "summary"
 
+    # 建立 SEVERITY_VALUE_classify_component 資料夾
+    classify_component_folder = f"{SEVERITY_VALUE}_classify_component"
+
     # 定義要壓縮的資料夾
-    folders_to_zip = [SEVERITY_VALUE, output_folder, summary_folder_path]
+    folders_to_zip = [SEVERITY_VALUE, output_folder, summary_folder_path, classify_component_folder]
 
     # 壓縮檔名
     zip_file_name = f"{SEVERITY_VALUE}_archive.zip"

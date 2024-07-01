@@ -36,7 +36,7 @@ def process_excel_file(severity_value, encoding, redmine_version, assignee_name)
             CVE_link = row['Column1.issue.link']
             CVSS_v2 = row['Column1.issue.scorev2']
             CVSS_v3 = row['Column1.issue.scorev3']
-            REDMINE_STATUS = row['Column1.redmine.status']
+            REDMINE_STATUS = row['Column1.redmine.upload']
 
             logging.info('Redmine_subject : %s', CVE_ID)
             logging.info('Redmine_VERSION: %s', redmine_version)

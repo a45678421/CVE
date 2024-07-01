@@ -64,7 +64,7 @@ def create_redmine_issue(driver, wait, username, password, project, redmine_vers
 
             # 提取資料並創建 Redmine Issue
             for index, row in df.iterrows():
-                redmine_status = str(row['Column1.redmine.status']).strip().lower()
+                redmine_status = str(row['Column1.redmine.upload']).strip().lower()
                 if redmine_status in ['false', 'no', 'n', '0', '']:
                     logging.info('Skipping issue creation for %s due to redmine status: %s', row['Column1.issue.id'], redmine_status)
                     continue

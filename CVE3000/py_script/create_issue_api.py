@@ -1,4 +1,5 @@
 import os
+import time
 import logging
 import pandas as pd
 from redminelib import Redmine
@@ -15,7 +16,7 @@ from init_webdriver import init_webdriver
 # Redmine 伺服器的 URL 和 API 金鑰
 REDMINE_URL = 'http://advrm.advantech.com:3006/'
 
-#提取並返回 feedback.txt 文件中的變量
+# 提取並返回 feedback.txt 文件中的變量
 def extract_variables():
     encoding = detect_file_encoding("feedback.txt")
     logging.info('Detected encoding: %s', encoding)
@@ -39,7 +40,7 @@ def extract_variables():
 
     return USERNAME, PASSWORD, API_KEY, PROJECT, REDMINE_VERSION, ASSIGNEE_NAME, SEVERITY_VALUE
 
-#讀取 zip_link.txt 文件並返回其內容
+# 讀取 zip_link.txt 文件並返回其內容
 def get_zip_link_content(severity_value):
     current_directory = os.path.dirname(os.path.abspath(__file__))
     zip_link_file = f"{severity_value}_zip_link.txt"
@@ -54,7 +55,8 @@ def get_zip_link_content(severity_value):
     else:
         logging.info('File %s does not exist.', zip_link_path)
         return ""
-#獲取指定的 Redmine 項目和版本的 ID
+
+# 獲取指定的 Redmine 項目和版本的 ID
 def get_project_and_version(redmine, project_name, version_name):
     try:
         projects = redmine.project.all()
@@ -98,7 +100,7 @@ def get_project_and_version(redmine, project_name, version_name):
 
     return project_id, version_id
 
-#使用 Selenium 獲取指定分配對象的 ID
+# 使用 Selenium 獲取指定分配對象的 ID
 def get_assignee_id(driver, project_name, assignee_name, username, password):
     login_url = "http://advrm.advantech.com:3006/login"
     driver.get(login_url)
@@ -146,9 +148,9 @@ def get_assignee_id(driver, project_name, assignee_name, username, password):
     logging.info('Assignee ID: %s', assignee_id)
     return assignee_id
 
-#讀取 Excel 文件並在 Redmine 中創建問題
+# 讀取 Excel 文件並在 Redmine 中創建問題
 def create_redmine_issues(redmine, project_id, version_id, assignee_id, severity_value, zip_link_content):
-    folder_path = severity_value
+    folder_path = f"{severity_value}_classify_component"  # 修改資料夾路徑
     file_names = os.listdir(folder_path)
 
     for file_name in file_names:
@@ -156,38 +158,48 @@ def create_redmine_issues(redmine, project_id, version_id, assignee_id, severity
             file_path = os.path.join(folder_path, file_name)
             df = pd.read_excel(file_path)
 
-            for index, row in df.iterrows():
-                redmine_status = str(row['Column1.redmine.status']).strip().lower()
-                if redmine_status in ['false', 'no', 'n', '0', '']:
-                    logging.info('Skipping issue creation for %s due to redmine status: %s', row['Column1.issue.id'], redmine_status)
-                    continue
+            # 去掉文件名中的 .xlsx 後綴
+            subject = file_name.rsplit('.xlsx', 1)[0]
 
-                subject = row['Column1.issue.id']
-                COMPONENT = row['Column1.name']
-                CATEGORY = row['Column1.layer']
-                VERSION = row['Column1.version']
-                Description = row['Column1.issue.summary']
-                ATTACK_VECTOR = row['Column1.issue.vector']
-                STATUS = row['Column1.issue.status']
-                CVE_link = row['Column1.issue.link']
-                CVSS_v2 = row['Column1.issue.scorev2']
-                CVSS_v3 = row['Column1.issue.scorev3']
+            # 檢查 COMPONENT 列是否存在
+            if 'COMPONENT' not in df.columns:
+                logging.error('Column COMPONENT not found in %s', file_name)
+                continue
 
-                try:
-                    issue = redmine.issue.create(
-                        project_id=project_id,
-                        tracker_id=1,
-                        subject=subject,
-                        description=f'Subject: {subject}\nComponent: {COMPONENT}\nCategory: {CATEGORY}\nVersion: {VERSION}\nDescription: {Description}\nzip link: {zip_link_content}\nCVE Link: {CVE_link}\nCVSS v2: {CVSS_v2}\nCVSS v3: {CVSS_v3}\n',
-                        assigned_to_id=assignee_id,
-                        custom_fields=[
-                            {'id': 6, 'value': version_id},
-                            {'id': 54, 'value': severity_value}
-                        ]
-                    )
-                    logging.info('Created issue %s', issue.id)
-                except Exception as e:
-                    logging.error('Error creating issue for %s: %s', subject, e)
+            description = ""
+
+            # 按 COMPONENT 分组
+            grouped = df.groupby('COMPONENT')
+
+            for component, group in grouped:
+                for index, row in group.iterrows():
+                    COMPONENT = row.get('COMPONENT', 'N/A')
+                    CATEGORY = row.get('CATEGORY', 'N/A')
+                    VERSION = row.get('VERSION', 'N/A')
+                    Description = row.get('Description', 'N/A')
+                    ATTACK_VECTOR = row.get('ATTACK_VECTOR', 'N/A')
+                    STATUS = row.get('STATUS', 'N/A')
+                    CVE_link = row.get('CVE_link', 'N/A')
+                    CVSS_v2 = row.get('CVSS_v2', 'N/A')
+                    CVSS_v3 = row.get('CVSS_v3', 'N/A')
+
+                    description += f'CVE ID: {row.get("CVE_ID", "N/A")}\nComponent: {COMPONENT}\nCategory: {CATEGORY}\nVersion: {VERSION}\nDescription: {Description}\nzip link: {zip_link_content}\nCVE Link: {CVE_link}\nCVSS v2: {CVSS_v2}\nCVSS v3: {CVSS_v3}\n-------------------\n'
+
+            try:
+                issue = redmine.issue.create(
+                    project_id=project_id,
+                    tracker_id=1,
+                    subject=subject,
+                    description=description,
+                    assigned_to_id=assignee_id,
+                    custom_fields=[
+                        {'id': 6, 'value': version_id},
+                        {'id': 54, 'value': severity_value}
+                    ]
+                )
+                logging.info('Created issue %s', issue.id)
+            except Exception as e:
+                logging.error('Error creating issue for %s: %s', subject, e)
 
 def main():
     # 設置日誌記錄器
