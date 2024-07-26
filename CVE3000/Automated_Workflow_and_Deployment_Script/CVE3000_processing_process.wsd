@@ -1,0 +1,38 @@
+@startuml CVE3000_Data_Processing_Workflow
+title JSON to Excel to HTML Workflow and Upload Process
+
+start
+if (JSON files exist?) then (yes)
+    :Read JSON files;
+    :Convert JSON to Excel;
+else (no)
+    :Directly process Excel files;
+endif
+:Rank the data based on criteria;
+:Summarize the data;
+:Group by product categories;
+:Generate HTML report;
+:Compress the file into a zip archive;
+
+:Upload Process Start;
+while (Username and password correct?) is (no)
+    :Prompt user to re-enter credentials;
+endwhile (yes)
+:Check version;
+if (Version exists?) then (no)
+    :Create version;
+    if (Version creation successful?) then (yes)
+        :Upload zip file;
+        :Obtain upload link;
+        :Create Bug Tracker;
+    else (no)
+        :Report version creation failure;
+    endif
+else (yes)
+    :Upload zip file;
+    :Obtain upload link;
+    :Create Bug Tracker;
+endif
+
+stop
+@enduml
