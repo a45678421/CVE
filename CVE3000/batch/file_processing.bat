@@ -21,6 +21,9 @@ python -u extract_and_save_data_txt.py
 echo Step 14: Classify component data...
 python -u classify_component_data.py
 
+echo Step 15: Generate HTML report...
+python -u excel_to_html_report_generator.py
+
 echo Step 15: Compressing files...
 python -u compress_files.py 
 

@@ -3,6 +3,7 @@ import glob
 import os
 import logging
 from setup_logging import setup_logging
+from tqdm import tqdm
 
 # 變數設置
 NUM_ROWS = 15000
@@ -45,27 +46,28 @@ def save_rows_to_excel(selected_data):
     medium_summary_df = pd.DataFrame()
     low_summary_df = pd.DataFrame()
 
-    for index, row in selected_data.iterrows():
+    for index, row in tqdm(selected_data.iterrows(), total=selected_data.shape[0], desc='Processing rows'):
         issue_id = row['Column1.issue.id']
         filename = f'{issue_id}.xlsx'
         
         if (row['Column1.issue.scorev2'] >= 7 or row['Column1.issue.scorev3'] >= 7):
             row_df = pd.DataFrame([row])
             row_df.to_excel(os.path.join('High', filename), index=False)
-            logging.info(f'Saved data to High/{filename}, scorev2 or scorev3 >= 7')
+            #logging.info(f'Saved data to High/{filename}, scorev2 or scorev3 >= 7')
             High_summary_df = pd.concat([High_summary_df, row_df], ignore_index=True)
         elif (4 <= row['Column1.issue.scorev2'] <= 6.9 or 4 <= row['Column1.issue.scorev3'] <= 6.9):
             row_df = pd.DataFrame([row])
             row_df.to_excel(os.path.join('Medium', filename), index=False)
-            logging.info(f'Saved data to Medium/{filename}, 4 <= scorev2 or scorev3 <= 6.9')
+            #logging.info(f'Saved data to Medium/{filename}, 4 <= scorev2 or scorev3 <= 6.9')
             medium_summary_df = pd.concat([medium_summary_df, row_df], ignore_index=True)
         elif (0 <= row['Column1.issue.scorev2'] <= 3.9 or 0 <= row['Column1.issue.scorev3'] <= 3.9):
             row_df = pd.DataFrame([row])
             row_df.to_excel(os.path.join('Low', filename), index=False)
-            logging.info(f'Saved data to Low/{filename}, 0 <= scorev2 or scorev3 <= 3.9')
+            #logging.info(f'Saved data to Low/{filename}, 0 <= scorev2 or scorev3 <= 3.9')
             low_summary_df = pd.concat([low_summary_df, row_df], ignore_index=True)
         else:
-            logging.info(f'Not saved, neither scorev2 nor scorev3 >= 7 or 4 <= scorev2 or scorev3 <= 6.9 or 0 <= scorev2 or scorev3 <= 3.9')
+            logging.error(f'Not saved, issue_id: {issue_id}, neither scorev2 nor scorev3 >= 7 or 4 <= scorev2 or scorev3 <= 6.9 or 0 <= scorev2 or scorev3 <= 3.9')
+
 
     High_summary_filename = 'High_summary.xlsx'
     High_summary_df.to_excel(os.path.join('summary', High_summary_filename), index=False)

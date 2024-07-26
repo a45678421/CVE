@@ -166,7 +166,11 @@ def create_redmine_issues(redmine, project_id, version_id, assignee_id, severity
                 logging.error('Column COMPONENT not found in %s', file_name)
                 continue
 
-            description = ""
+            # 計算 CVE 數量
+            cve_count = len(df)
+
+            description_table = ""
+            description_detail = ""
 
             # 按 COMPONENT 分组
             grouped = df.groupby('COMPONENT')
@@ -178,12 +182,23 @@ def create_redmine_issues(redmine, project_id, version_id, assignee_id, severity
                     VERSION = row.get('VERSION', 'N/A')
                     Description = row.get('Description', 'N/A')
                     ATTACK_VECTOR = row.get('ATTACK_VECTOR', 'N/A')
-                    STATUS = row.get('STATUS', 'N/A')
                     CVE_link = row.get('CVE_link', 'N/A')
                     CVSS_v2 = row.get('CVSS_v2', 'N/A')
                     CVSS_v3 = row.get('CVSS_v3', 'N/A')
+                    CVE_ID = row.get("CVE_ID", "N/A")
 
-                    description += f'CVE ID: {row.get("CVE_ID", "N/A")}\nComponent: {COMPONENT}\nCategory: {CATEGORY}\nVersion: {VERSION}\nDescription: {Description}\nzip link: {zip_link_content}\nCVE Link: {CVE_link}\nCVSS v2: {CVSS_v2}\nCVSS v3: {CVSS_v3}\n-------------------\n'
+                    description_table += f"|_. CVE ID | {CVE_ID}|\n"
+                    description_table += f"|_. Component |{COMPONENT}|\n"
+                    description_table += f"|_. Category|{CATEGORY}|\n"
+                    description_table += f"|_. Version |{VERSION}|\n"
+                    description_table += f"|_. zip link | {zip_link_content}|\n"
+                    description_table += f"|_. CVE Link |{CVE_link}|\n"
+                    description_table += f"|_. CVSS v2 |{CVSS_v2}|\n"
+                    description_table += f"|_. CVSS v3| {CVSS_v3}|\n"
+                    description_table += f"|_. Description | {Description} |\n\n"
+
+            # 最終描述
+            description = f"{COMPONENT} CVE Count: {cve_count}\n\n{description_table}"
 
             try:
                 issue = redmine.issue.create(
@@ -201,6 +216,7 @@ def create_redmine_issues(redmine, project_id, version_id, assignee_id, severity
             except Exception as e:
                 logging.error('Error creating issue for %s: %s', subject, e)
 
+# 主函數保持不變
 def main():
     # 設置日誌記錄器
     setup_logging()

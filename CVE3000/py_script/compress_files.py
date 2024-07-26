@@ -57,6 +57,14 @@ def main():
             else:
                 logging.info(f'資料夾 {folder} 不存在。')
 
+        # 添加 CVE_Issues.html 到壓縮文件
+        html_file = "CVE_Issues.html"
+        if os.path.exists(html_file):
+            zipf.write(html_file, os.path.basename(html_file))
+            logging.info(f'Added {html_file} to zip archive')
+        else:
+            logging.info(f'{html_file} 不存在。')
+
     logging.info(f'資料夾已壓縮為 {zip_file_name}')
 
 if __name__ == "__main__":
