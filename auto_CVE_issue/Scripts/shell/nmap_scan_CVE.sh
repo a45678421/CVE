@@ -63,3 +63,43 @@ log "All XML files have been converted to Excel and combined in $OUTPUT_EXCEL."
 log "All vulnerability scans are completed and the results are saved in the $OUTPUT_FOLDER folder."
 
 exit 0
+
+# 動作流程圖
+: '
+Start
+ |
+ |---> 定義 log 函數
+ |
+ |---> 重定向標準輸出和標準錯誤到 script.log，並保持在控制台顯示
+ |
+ |---> 從 target_ip.txt 讀取目標 IP 地址
+ |       |
+ |       |---> 如果 target_ip.txt 為空，記錄錯誤並退出
+ |
+ |---> 記錄目標 IP 地址
+ |
+ |---> 創建文件夾以保存掃描結果
+ |
+ |---> 準備合併的 Excel 文件
+ |
+ |---> 定義 nmap-converter.py 的路徑
+ |
+ |---> 列出所有 CSV 文件
+ |
+ |---> 遍歷每個 CSV 文件並執行漏洞掃描
+ |       |
+ |       |---> 記錄當前處理的 CSV 文件
+ |       |
+ |       |---> 執行 nmap 漏洞掃描，並將結果保存為文本和 XML 文件
+ |       |
+ |       |---> 使用 NMAP_CONVERTER 將 XML 文件轉換為 Excel 文件
+ |
+ |---> 記錄所有掃描結果保存在指定文件夾中
+ |
+ |---> 將所有 XML 文件合併轉換為一個 Excel 文件
+ |
+ |---> 記錄所有 XML 文件已轉換並合併為一個 Excel 文件
+ |
+ |---> 在控制台和日誌中顯示掃描完成信息
+ |
+End

@@ -4,6 +4,11 @@ import os
 import time
 import chardet
 import logging
+import sys
+
+# 設置控制台編碼為 UTF-8
+sys.stdout.reconfigure(encoding='utf-8')
+sys.stderr.reconfigure(encoding='utf-8')
 
 # 設定 logging，將日志記錄到 ../../script.log 文件，同時顯示在控制台
 current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -13,12 +18,12 @@ log_file_path = os.path.join(current_dir, '..', '..', 'script.log')
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
-# 創建文件handler
-file_handler = logging.FileHandler(log_file_path)
+# 創建文件handler，確保使用UTF-8編碼
+file_handler = logging.FileHandler(log_file_path, encoding='utf-8')
 file_handler.setLevel(logging.INFO)
 
-# 創建控制台handler
-console_handler = logging.StreamHandler()
+# 創建控制台handler，確保使用UTF-8編碼
+console_handler = logging.StreamHandler(sys.stdout)
 console_handler.setLevel(logging.INFO)
 
 # 設置日志格式
@@ -50,35 +55,20 @@ with open(cve_numbers_file_path, 'r', encoding=encoding) as file:
 for cve_number in cve_numbers:
     # 移除空白符號和換行符
     cve_number = cve_number.strip()
-    prion_cve_number = cve_number
 
+    # 跳過以 PRION:CVE- 開頭的CVE編號
     if cve_number.startswith("PRION:CVE-"):
-        title = cve_number
-        logger.info(f"Title: {title}")
-        filename = os.path.join(output_folder, f"{cve_number.replace(':', '-')}.txt")
-        cve_number = cve_number.split(':')[1]
-        url = f"https://www.prio-n.com/kb/vulnerability/{cve_number}"
-        is_prion = True
-    else:
-        url = f"https://vulners.com/cve/{cve_number}"
-        filename = os.path.join(output_folder, f"{cve_number}.txt")
-        title = f"CVE-{cve_number}"
-        is_prion = False
+        continue  # 跳過這個CVE編號
+
+    url = f"https://vulners.com/cve/{cve_number}"
+    filename = os.path.join(output_folder, f"{cve_number}.txt")
 
     # 取得網頁內容
-    response = requests.get(f"https://vulners.com/cve/{cve_number}")
+    response = requests.get(url)
     html_content = response.text
 
     # 解析HTML
     soup = BeautifulSoup(html_content, 'html.parser')
-
-    # 找到標題
-    title_tag = soup.find('h1', class_='css-1da673l-header-Content-title')
-    if title_tag:
-        title_content = title_tag.text.strip()
-    else:
-        title_content = f"No Title Found for {prion_cve_number}"
-        logger.error(title_content)
 
     time.sleep(1)
 
@@ -89,27 +79,21 @@ for cve_number in cve_numbers:
         if content_paragraphs:
             content = '\n'.join(paragraph.text.strip() for paragraph in content_paragraphs)
         else:
-            content = f"No Content Found for {prion_cve_number}"
+            content = f"No Content Found for {cve_number}"
             logger.error(content)
     else:
-        content = f"No Content Found for {prion_cve_number}"
+        content = f"No Content Found for {cve_number}"
         logger.error(content)
 
     # 建立並寫入.txt檔案
     with open(filename, 'w', encoding='utf-8') as file:
-        # 寫入內容
-        if is_prion:
-            file.write(f"Title: {prion_cve_number}\n\n")
-        else:
-            file.write(f"Title: {title_content}\n\n")
-            logger.info(f"Title: {title_content}")
-        file.write(f"CVE URL:\n{url}\n\n")
+        file.write(f"CVE URL:\n{url}\nhttps://www.prio-n.com/kb/vulnerability/{cve_number}\n\n")
         logger.info(f"CVE URL: {url}")
         file.write(f"Description:\n{content}")
         logger.info(f"Description: {content}")
 
     # 記錄到日誌
-    if "No Title Found" in title_content or "No Content Found" in content:
+    if "No Content Found" in content:
         logger.error(f"File saved as: {filename}")
     else:
         logger.info(f"File saved as: {filename}")

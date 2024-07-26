@@ -35,3 +35,14 @@ Before testing, make sure to comment out the following two lines in `click_to_cr
 ```python
 # create_button = driver.find_element(By.CSS_SELECTOR, "input[type='submit'][value='Create']")
 # create_button.click()
+```
+# Additional Notes
+If there is no shared folder in the virtual machine, follow these steps to set up a shared folder:
+1. Shut down the virtual machine.
+2. In the VirtualBox main interface, select your virtual machine and click "Settings".
+3. In the settings window, select "Shared Folders".
+4. Click the "Add Shared Folder" icon on the right.
+5. In "Folder Path", select the host folder you want to share.
+6. In "Folder Name", enter a name that will be used in the virtual machine.
+7. Check "Auto-mount" and "Make Permanent".
+8. Click "OK".

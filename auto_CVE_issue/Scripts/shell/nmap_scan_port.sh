@@ -124,3 +124,59 @@ log "Combined Excel file saved as $OUTPUT_EXCEL."
 log "Script execution completed."
 
 exit 0
+
+
+# 動作流程圖
+: '
+Start
+ |
+ |---> 定義 log 函數
+ |
+ |---> 重定向標準輸出和標準錯誤到 script.log，並保持在控制台顯示
+ |
+ |---> 從 target_ip.txt 讀取目標 IP 地址
+ |       |
+ |       |---> 如果 target_ip.txt 為空，記錄錯誤並退出
+ |
+ |---> 記錄目標 IP 地址
+ |
+ |---> 創建文件夾以保存掃描結果
+ |
+ |---> 準備合併的 Excel 文件
+ |
+ |---> TCP SYN 掃描
+ |
+ |---> TCP 連接掃描
+ |
+ |---> TCP ACK 掃描
+ |
+ |---> TCP 窗口掃描
+ |
+ |---> TCP Maimon 掃描
+ |
+ |---> UDP 掃描
+ |
+ |---> TCP Null 掃描
+ |
+ |---> TCP FIN 掃描
+ |
+ |---> TCP Xmas 掃描
+ |
+ |---> 執行腳本掃描
+ |
+ |---> 記錄掃描結果保存在指定文件夾中
+ |
+ |---> 將 XML 結果轉換為 HTML
+ |
+ |---> 定義 nmap-converter.py 的路徑
+ |
+ |---> 將所有 XML 文件轉換為 Excel 文件
+ |
+ |---> 合併所有 XML 文件為一個 Excel 文件
+ |
+ |---> 記錄所有 XML 文件已轉換並合併為一個 Excel 文件
+ |
+ |---> 在控制台和日誌中顯示腳本執行完成信息
+ |
+End
+'

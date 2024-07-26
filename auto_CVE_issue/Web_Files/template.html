@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <title>Nmap 掃描報告</title>
+    <style>
+        body {{ font-family: Arial, sans-serif; line-height: 1.6; background-color: #f7f7f7; margin: 0; padding: 0; }}
+        .container {{ width: 80%; margin: 20px auto; padding: 20px; background-color: #fff; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); border-radius: 8px; }}
+        .header, .footer {{ text-align: center; padding: 20px; background: #d9534f; color: #fff; border-radius: 8px 8px 0 0; }}
+        .content {{ margin: 20px 0; }}
+        .content h2 {{ color: #333; border-bottom: 2px solid #d9534f; padding-bottom: 5px; }}
+        .vul-details {{ margin: 20px 0; padding: 20px; border: 1px solid #ddd; border-radius: 5px; background: #f9f9f9; }}
+        .vul-title {{ font-weight: bold; color: #d9534f; font-size: 1.2em; }}
+        .vul-info {{ margin: 5px 0; }}
+        .vul-info strong {{ color: #555; }}
+        ul {{ padding-left: 20px; }}
+        li {{ margin-bottom: 5px; }}
+        a {{ color: #337ab7; text-decoration: none; }}
+        a:hover {{ text-decoration: underline; }}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Nmap 掃描報告</h1>
+        </div>
+        <div class="content">
+            <h2>掃描報告摘要</h2>
+            <p><strong>掃描工具:</strong> Nmap 7.94SVN</p>
+            <p><strong>掃描命令:</strong> nmap -sV --script vulners --script-args vulscandb=cve.csv -oN CVE_scan_results/script_scan_cve.txt -oX CVE_scan_results/script_scan_cve.xml 172.17.8.65</p>
+            <p><strong>目標IP:</strong> {host}</p>
+            <p><strong>狀態:</strong> 主機在線（延遲 {latency}）</p>
+            <p><strong>MAC地址:</strong> {mac_address} ({mac_vendor}</p>
+            {ports_html}
+            {vulnerabilities_html}
+            {closed_ports_html}
+        </div>
+        <div class="footer">
+            <p>&copy; 2024 安全掃描報告</p>
+        </div>
+    </div>
+</body>
+</html>

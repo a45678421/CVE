@@ -38,7 +38,7 @@ logger.addHandler(console_handler)
 USERNAME = ""
 PASSWORD = ""
 ASSIGNEE_NAME = ""
-SEVERITY_VALUE = ""
+TARGET_VERSION = ""
 
 # 設定文件路徑
 source_folder = os.path.join(current_dir, '..', '..', 'Text_Files')
@@ -77,15 +77,12 @@ for line in lines:
         TARGET_VERSION = line.split(":")[1].strip()
     elif "Assignee:" in line:
         ASSIGNEE_NAME = line.split(":")[1].strip()
-    elif "Severity:" in line:
-        SEVERITY_VALUE = line.split(":")[1].strip()
 
 # 輸出提取的值
 logger.info(f"USERNAME: {USERNAME}")
 logger.info(f"PASSWORD: {PASSWORD}")
 logger.info(f"TARGET_VERSION: {TARGET_VERSION}")
 logger.info(f"ASSIGNEE_NAME: {ASSIGNEE_NAME}")
-logger.info(f"SEVERITY_VALUE: {SEVERITY_VALUE}")
 
 # 讀取 cve_numbers.txt
 cve_numbers = read_file_with_chardet(cve_numbers_file_path)
@@ -98,11 +95,11 @@ for cve_number in cve_numbers:
 
     # 判斷是否為 PRION:CVE-XXXX-XXXXX
     if CVE_NUMBER.startswith("PRION:CVE-"):
-        description_file_name = CVE_NUMBER.replace(":", "-")
-        logger.info(f"Description file name: {description_file_name}")
-    else:
-        description_file_name = CVE_NUMBER
-        logger.info(f"Description file name: {description_file_name}")
+        logger.info(f"Skipping {CVE_NUMBER} as it starts with PRION")
+        continue  # 跳過這個CVE編號
+
+    description_file_name = CVE_NUMBER
+    logger.info(f"Description file name: {description_file_name}")
 
     # 從 CVE 檔案讀取描述內容
     description_files = glob.glob(os.path.join(source_folder, f"{description_file_name}.txt"))
@@ -113,6 +110,15 @@ for cve_number in cve_numbers:
     else:
         DESCRIPTION = f"No description available for {CVE_NUMBER}"
         logger.error(DESCRIPTION)
+
+    # 讀取 SEVERITY_VALUE
+    severity_file_path = os.path.join(source_folder, f"{CVE_NUMBER}_severity.txt")
+    if os.path.exists(severity_file_path):
+        SEVERITY_VALUE = read_file_with_chardet(severity_file_path)[0].strip()
+        logger.info(f"Severity for {CVE_NUMBER}: {SEVERITY_VALUE}")
+    else:
+        SEVERITY_VALUE = "Unknown"
+        logger.error(f"Severity file not found for {CVE_NUMBER}")
 
     # 啟動 Chrome 瀏覽器
     driver = webdriver.Chrome()
@@ -161,8 +167,9 @@ for cve_number in cve_numbers:
     description_textarea = WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.ID, "issue_description"))
     )
-    description_textarea.send_keys(DESCRIPTION)
-    logger.info("Entered issue description")
+    full_description = f"{DESCRIPTION}\n\nSummary attachment : nmap_report.html"
+    description_textarea.send_keys(full_description)
+    logger.info("Entered issue description with summary attachment note")
 
     # 等待 Assignee 下拉選單加載並選擇 Assignee
     assignee_dropdown = WebDriverWait(driver, 10).until(
@@ -199,7 +206,7 @@ for cve_number in cve_numbers:
     version_select.select_by_value(target_option_value)
     logger.info(f"Selected Version: {target_option_text}")
 
-    # 選擇 Severity 為 Low
+    # 選擇 Severity 
     severity_dropdown = WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.ID, "issue_custom_field_values_54"))
     )
@@ -214,6 +221,19 @@ for cve_number in cve_numbers:
     # 將檔案路徑傳送至 input 元素
     file_input.send_keys(file_path)
     logger.info(f"Uploaded file: {file_path}")
+
+    # 將檔案路徑傳送至 input 元素
+    normalized_file_path = os.path.abspath(file_path)
+    normalized_html_path = os.path.abspath(os.path.join(current_dir, '..', '..', 'nmap_report.html'))
+
+    # 等待頁面載入完成，並找到文件上傳的input元素
+    html_input = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.CSS_SELECTOR, "input.file_selector.filedrop"))
+    )
+
+    # 將HTML檔案路徑傳送至 input 元素
+    html_input.send_keys(normalized_html_path)
+    logger.info(f"Uploaded HTML file: {normalized_html_path}") 
 
     # 等待最多 10 秒
     wait = WebDriverWait(driver, 10)

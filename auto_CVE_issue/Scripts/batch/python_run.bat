@@ -75,6 +75,9 @@ call "%scriptDir%move_CVE_txt.bat"
 echo "Executing install_packages.py..."
 python "%scriptDir%..\..\Scripts\python\install_packages.py"
 
+echo "Executing generate_html_report.py..."
+python "%scriptDir%..\..\Scripts\python\generate_html_report.py"
+
 echo "Executing compress_files.py..."
 python "%scriptDir%..\..\Scripts\python\compress_files.py"
 
@@ -86,6 +89,11 @@ python "%scriptDir%..\..\Scripts\python\grep_CVE_content.py"
 
 echo "Executing click_to_create_issue.py..."
 python "%scriptDir%..\..\Scripts\python\click_to_create_issue.py"
+
+rem opens http://127.0.0.1:5000/ in the default browser
+start http://127.0.0.1:5000/
+rem starts the Flask server
+python "%scriptDir%..\..\Scripts\python\show_html_reports.py"
 
 echo "Operations completed."
 

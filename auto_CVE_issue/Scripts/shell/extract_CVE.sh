@@ -44,3 +44,45 @@ awk '{print $2}' "$OUTPUT_FILE" > cve_numbers.txt
 log "CVE numbers extracted and saved in cve_numbers.txt."
 
 echo "CVE numbers extracted and saved in cve_numbers.txt."
+
+
+# 動作流程圖
+: '
+Start
+ |
+ |---> 定義 log 函數
+ |
+ |---> 設置變量 DIRECTORY 和 OUTPUT_FILE
+ |
+ |---> 刪除之前的 OUTPUT_FILE 文件 (if exist)
+ |       |
+ |       |---> 記錄刪除操作到日誌
+ |
+ |---> 遍歷目錄中的所有 .txt 文件
+ |       |
+ |       |---> 對每個文件使用 grep 搜索 "CVE-" 並附加到臨時文件
+ |       |       |
+ |       |       |---> 記錄處理過程到日誌
+ |
+ |---> 記錄提取結果到日誌
+ |
+ |---> 排序並刪除重複的條目
+ |       |
+ |       |---> 保存到 OUTPUT_FILE
+ |       |
+ |       |---> 記錄排序結果到日誌
+ |
+ |---> 刪除臨時文件
+ |       |
+ |       |---> 記錄清理操作到日誌
+ |
+ |---> 提取 CVE 編號
+ |       |
+ |       |---> 保存到 cve_numbers.txt
+ |       |
+ |       |---> 記錄提取結果到日誌
+ |
+ |---> 在控制台顯示最終結果
+ |
+End
+'

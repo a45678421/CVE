@@ -109,7 +109,7 @@ function feedback(formData, setupYes) {
     textData += `scanusername: ${formData.get('scanusername')}\n`;
     textData += `scanpassword: ${formData.get('scanpassword')}\n`;
     textData += `Assignee: ${formData.get('Assignee')}\n`;
-    textData += `Severity: ${formData.get('Severity')}\n`;
+    //textData += `Severity: ${formData.get('Severity')}\n`;
     textData += `shareLocation: ${formData.get('shareLocation')}\n`;
     textData += `Set installation permission: ${setupYes ? 'yes' : 'no'}\n`;
     if (setupYes) {

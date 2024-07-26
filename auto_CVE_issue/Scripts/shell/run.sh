@@ -157,13 +157,15 @@ case $MODE in
         ;;
     2)
         # Move directory with force (ignoring non-empty target directory)
-        sudo cp -rf "CVE_scan_results" "nmap_scan/CVE_scan_results"
+        sudo rm -rf "nmap_scan/CVE_scan_results"
+        sudo cp -rf "CVE_scan_results" "nmap_scan/"
         sudo cp -rf "cve_numbers.txt" "nmap_scan/"
         log "Copied CVE_scan_results and cve_numbers.txt to nmap_scan directory."
         ;;
     3)
         # Move files to nmap_scan directory
-        sudo cp -f "CVE_scan_results" "Port_scan_results" "cve_numbers.txt" nmap_scan/
+        sudo rm -rf "nmap_scan/CVE_scan_results" "nmap_scan/Port_scan_results"
+        sudo cp -rf "CVE_scan_results" "Port_scan_results" "cve_numbers.txt" nmap_scan/
         log "Copied CVE_scan_results, Port_scan_results, and cve_numbers.txt to nmap_scan directory."
         ;;
     *)
@@ -184,3 +186,51 @@ sudo cp -r "nmap_scan" "/media/sf_share/"
 echo "Script execution completed."
 
 exit 0
+
+# 動作流程圖
+: '
+Start
+ |
+ |---> 定義 log 函數
+ |
+ |---> 重定向標準輸出和標準錯誤到 script.log，並保持在控制台顯示
+ |
+ |---> 從 feedback.txt 讀取相關信息
+ |       |
+ |       |---> 設置腳本執行權限
+ |       |
+ |       |---> 去除 shell 腳本中的回車符
+ |       |
+ |       |---> 讀取安裝許可設置 (RUN_SETUP)，掃描模式 (MODE) 和目標 IP 地址
+ |
+ |---> 根據 RUN_SETUP 設置執行 setup.sh
+ |
+ |---> 驗證 IP 地址格式和範圍
+ |       |
+ |       |---> 如果無效，記錄錯誤並退出
+ |
+ |---> 根據 MODE 設置執行對應的掃描腳本
+ |       |
+ |       |---> 模式 1: 執行 nmap_port_scan.sh
+ |       |
+ |       |---> 模式 2: 執行 nmap_scan_CVE.sh
+ |       |
+ |       |---> 模式 3: 執行 nmap_port_scan.sh 和 nmap_scan_CVE.sh
+ |
+ |---> 執行 extract_CVE.sh 腳本
+ |
+ |---> 創建 nmap_scan 目錄並移動相應的結果文件
+ |       |
+ |       |---> 移動 Port_scan_results
+ |       |
+ |       |---> 移動 CVE_scan_results 和 cve_numbers.txt
+ |       |
+ |       |---> 移動 Port_scan_results, CVE_scan_results 和 cve_numbers.txt
+ |
+ |---> 複製 script.log 到 nmap_scan 目錄
+ |
+ |---> 複製 nmap_scan 目錄到 /media/sf_share/
+ |
+ |---> 腳本執行完成
+End
+'

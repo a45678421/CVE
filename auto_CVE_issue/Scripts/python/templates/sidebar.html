@@ -1,0 +1,13 @@
+<nav class="col-md-3 col-lg-2 sidebar bg-light">
+    <h2 class="mt-4">Port Scan Results</h2>
+    <ul class="nav flex-column">
+        {% for file in files %}
+            <li class="nav-item">
+                <a class="nav-link {% if file == filename %}active{% endif %}" href="{{ url_for('view', file=file) }}">{{ file }}</a>
+            </li>
+        {% endfor %}
+        <li class="nav-item mt-4">
+            <a class="nav-link" href="javascript:history.back()">Back</a>
+        </li>
+    </ul>
+</nav>
